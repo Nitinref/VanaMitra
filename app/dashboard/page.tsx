@@ -5,7 +5,6 @@ import { InteractiveMap } from "@/components/interactive-map"
 import { AIInsights } from "@/components/ai-insights"
 import { BeneficiaryAnalytics } from "@/components/beneficiary-analytics"
 import { SchemeHeatmap } from "@/components/scheme-heatmap"
-import { StatusFeed } from "@/components/status-feed"
 import { DashboardFooter } from "@/components/dashboard-footer"
 import { UserLandTracker } from "@/components/user-land-tracker"
 
@@ -46,11 +45,6 @@ export default function AranyaAtlasDashboard() {
             {/* Scheme Allocation Heatmap */}
             <div className="xl:col-span-2">
               <SchemeHeatmap />
-            </div>
-
-            {/* Real-Time Status Feed */}
-            <div className="xl:col-span-1">
-              <StatusFeed />
             </div>
           </div>
         </div>
