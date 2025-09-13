@@ -1,0 +1,360 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Added Leaflet CSS for proper map rendering */
+@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color scheme to Vanamitra green gradient theme with better contrast */
+  --background: #ffffff; /* Pure white background */
+  --foreground: #1f2937; /* Darker gray text for better contrast */
+  --card: #f0fdf4; /* Light green tint for cards */
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  --primary: #166534; /* Darker forest green for better contrast */
+  --primary-foreground: #ffffff;
+  --secondary: #65a30d; /* Darker green secondary for better contrast */
+  --secondary-foreground: #ffffff;
+  --muted: #f0fdf4; /* Light green muted */
+  --muted-foreground: #4b5563;
+  --accent: #65a30d; /* Darker green accent for better contrast */
+  --accent-foreground: #ffffff;
+  --destructive: #be123c;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #f0fdf4;
+  --ring: rgba(20, 184, 166, 0.5);
+  --chart-1: #10b981; /* Emerald green */
+  --chart-2: #65a30d; /* Darker lime green */
+  --chart-3: #059669; /* Teal green */
+  --chart-4: #1e3a8a; /* Blue accent */
+  --chart-5: #be123c; /* Red accent */
+  --radius: 0.5rem;
+  --sidebar: #f0fdf4;
+  --sidebar-foreground: #1f2937;
+  --sidebar-primary: #166534;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #65a30d;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: rgba(20, 184, 166, 0.5);
+}
+
+.dark {
+  --background: oklch(0.15 0.01 240);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.18 0.01 240);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.15 0.01 240);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.6 0.15 140);
+  --primary-foreground: oklch(0.15 0.01 240);
+  --secondary: oklch(0.25 0.01 240);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.25 0.01 240);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.6 0.15 140);
+  --accent-foreground: oklch(0.15 0.01 240);
+  --destructive: oklch(0.5 0.2 25);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.25 0.01 240);
+  --input: oklch(0.25 0.01 240);
+  --ring: oklch(0.6 0.15 140);
+  --chart-1: oklch(0.6 0.2 220);
+  --chart-2: oklch(0.65 0.18 140);
+  --chart-3: oklch(0.7 0.15 180);
+  --chart-4: oklch(0.75 0.18 280);
+  --chart-5: oklch(0.8 0.2 60);
+  --sidebar: oklch(0.18 0.01 240);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.6 0.15 140);
+  --sidebar-primary-foreground: oklch(0.15 0.01 240);
+  --sidebar-accent: oklch(0.25 0.01 240);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.25 0.01 240);
+  --sidebar-ring: oklch(0.6 0.15 140);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Enhanced Vanamitra gradient utilities with better contrast */
+  .vanamitra-gradient {
+    background: linear-gradient(135deg, #15803d 0%, #84cc16 100%);
+  }
+
+  .vanamitra-gradient-soft {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+  }
+
+  .vanamitra-gradient-radial {
+    background: radial-gradient(circle at center, #15803d 0%, #059669 50%, #84cc16 100%);
+  }
+
+  /* New animated gradient backgrounds */
+  .vanamitra-gradient-animated {
+    background: linear-gradient(-45deg, #15803d, #059669, #84cc16, #22c55e);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  .vanamitra-gradient-hero {
+    background: linear-gradient(-45deg, #f0fdf4, #dcfce7, #bbf7d0, #86efac);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  .vanamitra-gradient-cta {
+    background: linear-gradient(-45deg, #15803d, #166534, #059669, #047857);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+  }
+
+  /* Gradient animation keyframes */
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Enhanced text gradient with animation */
+  .vanamitra-text-gradient {
+    background: linear-gradient(135deg, #15803d 0%, #059669 50%, #84cc16 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradientShift 6s ease infinite;
+  }
+
+  @keyframes textGradientShift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Floating animation for elements */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Pulse glow effect */
+  .pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(21, 128, 61, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(21, 128, 61, 0.6);
+    }
+  }
+
+  /* Leaflet map container fixes */
+  .leaflet-container {
+    @apply rounded-lg;
+    font-family: inherit !important;
+  }
+
+  .leaflet-popup-content-wrapper {
+    @apply bg-card text-card-foreground rounded-lg shadow-lg;
+  }
+
+  .leaflet-popup-tip {
+    @apply bg-card;
+  }
+
+  .leaflet-control-zoom a {
+    @apply bg-card text-card-foreground border-border hover:bg-accent hover:text-accent-foreground;
+  }
+
+  /* Mobile-first responsive design */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) transparent;
+  }
+
+  .mobile-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .mobile-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .mobile-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--muted);
+    border-radius: 3px;
+  }
+
+  /* Glassmorphism effect for modern UI */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Dark mode glass effect */
+  .dark .glass-effect {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Loading animations */
+  .pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Custom scrollbar for better UX */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--muted);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-foreground);
+  }
+}
+
+/* Media queries for enhanced mobile responsiveness */
+@layer utilities {
+  @media (max-width: 768px) {
+    .mobile-padding {
+      @apply px-4 py-2;
+    }
+
+    .mobile-text {
+      @apply text-sm;
+    }
+
+    .mobile-hide {
+      @apply hidden;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sm-full-width {
+      @apply w-full;
+    }
+
+    .sm-stack {
+      @apply flex-col space-y-2 space-x-0;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .leaflet-container {
+      filter: contrast(1.2);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+
+    .leaflet-container {
+      break-inside: avoid;
+    }
+  }
+}
